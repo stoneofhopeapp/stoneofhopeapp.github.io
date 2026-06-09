@@ -1,0 +1,37 @@
+{
+  "versionAbbr": "KJV",
+  "bookOrd": 19,
+  "bookName": "Psalms",
+  "chapterOrd": 54,
+  "verseCount": 7,
+  "verses": [
+    {
+      "verseOrd": 1,
+      "text": "Save me, O God, by thy name, and judge me by thy strength."
+    },
+    {
+      "verseOrd": 2,
+      "text": "Hear my prayer, O God; give ear to the words of my mouth."
+    },
+    {
+      "verseOrd": 3,
+      "text": "For strangers are risen up against me, and oppressors seek after my soul: they have not set God before them. Selah."
+    },
+    {
+      "verseOrd": 4,
+      "text": "Behold, God is mine helper: the Lord is with them that uphold my soul."
+    },
+    {
+      "verseOrd": 5,
+      "text": "He shall reward evil unto mine enemies: cut them off in thy truth."
+    },
+    {
+      "verseOrd": 6,
+      "text": "I will freely sacrifice unto thee: I will praise thy name, O Lord; for it is good."
+    },
+    {
+      "verseOrd": 7,
+      "text": "For he hath delivered me out of all trouble: and mine eye hath seen his desire upon mine enemies."
+    }
+  ]
+}

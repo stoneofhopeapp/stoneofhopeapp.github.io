@@ -1,0 +1,33 @@
+{
+  "versionAbbr": "KJV",
+  "bookOrd": 19,
+  "bookName": "Psalms",
+  "chapterOrd": 23,
+  "verseCount": 6,
+  "verses": [
+    {
+      "verseOrd": 1,
+      "text": "The Lord is my shepherd; I shall not want."
+    },
+    {
+      "verseOrd": 2,
+      "text": "He maketh me to lie down in green pastures: he leadeth me beside the still waters."
+    },
+    {
+      "verseOrd": 3,
+      "text": "He restoreth my soul: he leadeth me in the paths of righteousness for his name’s sake."
+    },
+    {
+      "verseOrd": 4,
+      "text": "Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me."
+    },
+    {
+      "verseOrd": 5,
+      "text": "Thou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over."
+    },
+    {
+      "verseOrd": 6,
+      "text": "Surely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the Lord for ever."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "versionAbbr": "KJV",
+  "bookOrd": 19,
+  "bookName": "Psalms",
+  "chapterOrd": 134,
+  "verseCount": 3,
+  "verses": [
+    {
+      "verseOrd": 1,
+      "text": "Behold, bless ye the Lord, all ye servants of the Lord, which by night stand in the house of the Lord."
+    },
+    {
+      "verseOrd": 2,
+      "text": "Lift up your hands in the sanctuary, and bless the Lord."
+    },
+    {
+      "verseOrd": 3,
+      "text": "The Lord that made heaven and earth bless thee out of Zion."
+    }
+  ]
+}

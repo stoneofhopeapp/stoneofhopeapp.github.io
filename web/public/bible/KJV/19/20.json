@@ -1,0 +1,45 @@
+{
+  "versionAbbr": "KJV",
+  "bookOrd": 19,
+  "bookName": "Psalms",
+  "chapterOrd": 20,
+  "verseCount": 9,
+  "verses": [
+    {
+      "verseOrd": 1,
+      "text": "The Lord hear thee in the day of trouble; the name of the God of Jacob defend thee;"
+    },
+    {
+      "verseOrd": 2,
+      "text": "Send thee help from the sanctuary, and strengthen thee out of Zion;"
+    },
+    {
+      "verseOrd": 3,
+      "text": "Remember all thy offerings, and accept thy burnt sacrifice; Selah."
+    },
+    {
+      "verseOrd": 4,
+      "text": "Grant thee according to thine own heart, and fulfil all thy counsel."
+    },
+    {
+      "verseOrd": 5,
+      "text": "We will rejoice in thy salvation, and in the name of our God we will set up our banners: the Lord fulfil all thy petitions."
+    },
+    {
+      "verseOrd": 6,
+      "text": "Now know I that the Lord saveth his anointed; he will hear him from his holy heaven with the saving strength of his right hand."
+    },
+    {
+      "verseOrd": 7,
+      "text": "Some trust in chariots, and some in horses: but we will remember the name of the Lord our God."
+    },
+    {
+      "verseOrd": 8,
+      "text": "They are brought down and fallen: but we are risen, and stand upright."
+    },
+    {
+      "verseOrd": 9,
+      "text": "Save, Lord: let the king hear us when we call."
+    }
+  ]
+}

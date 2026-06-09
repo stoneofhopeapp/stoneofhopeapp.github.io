@@ -1,0 +1,33 @@
+{
+  "versionAbbr": "KJV",
+  "bookOrd": 19,
+  "bookName": "Psalms",
+  "chapterOrd": 150,
+  "verseCount": 6,
+  "verses": [
+    {
+      "verseOrd": 1,
+      "text": "Praise ye the Lord. Praise God in his sanctuary: praise him in the firmament of his power."
+    },
+    {
+      "verseOrd": 2,
+      "text": "Praise him for his mighty acts: praise him according to his excellent greatness."
+    },
+    {
+      "verseOrd": 3,
+      "text": "Praise him with the sound of the trumpet: praise him with the psaltery and harp."
+    },
+    {
+      "verseOrd": 4,
+      "text": "Praise him with the timbrel and dance: praise him with stringed instruments and organs."
+    },
+    {
+      "verseOrd": 5,
+      "text": "Praise him upon the loud cymbals: praise him upon the high sounding cymbals."
+    },
+    {
+      "verseOrd": 6,
+      "text": "Let every thing that hath breath praise the Lord. Praise ye the Lord."
+    }
+  ]
+}
