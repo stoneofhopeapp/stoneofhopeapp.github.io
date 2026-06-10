@@ -9,6 +9,13 @@ export type SessionUser = {
 
 const DEMO_USER_STORAGE_KEY = 'stone-of-hope.demo-user'
 
+const DEV_DEMO_USER: SessionUser = {
+  uid: 'dev-local',
+  displayName: 'Dev',
+  email: null,
+  authSource: 'demo',
+}
+
 export function mapFirebaseUser(user: User): SessionUser {
   return {
     uid: user.uid,
@@ -29,6 +36,11 @@ export function loadDemoUser(): SessionUser | null {
   } catch {
     return null
   }
+}
+
+/** Dev server only: skip login and open StudyWorkspace with a local demo session. */
+export function loadInitialDemoUser(): SessionUser | null {
+  return loadDemoUser() ?? (import.meta.env.DEV ? DEV_DEMO_USER : null)
 }
 
 export function saveDemoUser(user: SessionUser) {

@@ -1,16 +1,19 @@
 :root {
-  --soh-bg:
-    radial-gradient(circle at top left, rgba(211, 175, 122, 0.18), transparent 28%),
-    linear-gradient(180deg, #f6efe4 0%, #f4f0ea 44%, #eef3ef 100%);
+  --soh-home-review-bg: #dce8f0;
+  --soh-page-bg: #fffaf1;
+  --soh-bg: var(--soh-page-bg);
   --soh-text: #1d2935;
-  --soh-card-bg: rgba(255, 255, 255, 0.9);
-  --soh-card-border: rgba(29, 41, 53, 0.08);
-  --soh-card-shadow: 0 24px 60px rgba(29, 41, 53, 0.08);
+  --soh-card-bg: #ffffff;
+  --soh-card-border: rgba(29, 41, 53, 0.07);
+  --soh-card-shadow: 0 10px 28px rgba(29, 41, 53, 0.06);
+  --soh-chip-bg: #eef1f4;
+  --soh-chip-bg-hover: #e4e8ed;
+  --soh-chip-text: #4f5d6b;
   --soh-muted: #697787;
   --soh-subtle: #405261;
   --soh-eyebrow: #7e6a4e;
-  --soh-soft-surface: #f8f4ee;
-  --soh-soft-surface-2: #fbfaf8;
+  --soh-soft-surface: #faf8f4;
+  --soh-soft-surface-2: #ffffff;
   --soh-active-surface: linear-gradient(180deg, #fff9ef 0%, #f8f1df 100%);
   --soh-active-border: #b78638;
   --soh-hero-card-bg: linear-gradient(145deg, #203449, #2f4f5f);
@@ -21,13 +24,16 @@
 }
 
 [data-theme='dark'] {
-  --soh-bg:
-    radial-gradient(circle at top left, rgba(177, 137, 81, 0.16), transparent 24%),
-    linear-gradient(180deg, #0f161f 0%, #121c28 46%, #16222c 100%);
+  --soh-home-review-bg: #243444;
+  --soh-page-bg: #121a24;
+  --soh-bg: var(--soh-page-bg);
   --soh-text: #edf2f7;
-  --soh-card-bg: rgba(20, 28, 39, 0.9);
+  --soh-card-bg: #1a2430;
   --soh-card-border: rgba(226, 235, 245, 0.08);
-  --soh-card-shadow: 0 24px 60px rgba(3, 8, 15, 0.36);
+  --soh-card-shadow: 0 12px 32px rgba(3, 8, 15, 0.32);
+  --soh-chip-bg: #243040;
+  --soh-chip-bg-hover: #2b394c;
+  --soh-chip-text: #c5d2e0;
   --soh-muted: #9cadbf;
   --soh-subtle: #cad6e4;
   --soh-eyebrow: #d3bb95;
@@ -621,6 +627,502 @@ body {
   color: var(--soh-subtle);
 }
 
+.soh-nav {
+  background: color-mix(in srgb, var(--soh-page-bg) 92%, white) !important;
+  border-bottom: 1px solid var(--soh-card-border);
+}
+
+.soh-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.soh-nav__verse {
+  margin: 0;
+  margin-right: auto;
+  padding: var(--bs-navbar-brand-padding-y) 0;
+  text-align: left;
+  font-family: var(--bs-body-font-family);
+  font-size: var(--bs-navbar-brand-font-size);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--soh-subtle);
+  text-decoration: none;
+}
+
+.soh-nav__verse:hover,
+.soh-nav__verse:focus {
+  color: var(--soh-text);
+}
+
+.soh-nav__actions {
+  flex-shrink: 0;
+}
+
+[data-theme='dark'] .soh-nav {
+  background: color-mix(in srgb, var(--soh-page-bg) 94%, black) !important;
+}
+
+/* Home dashboard */
+
+.home-shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
+}
+
+.home-hero-card {
+  --home-hero-height: 420px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 1fr);
+  align-items: stretch;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border: 1px solid var(--soh-card-border);
+  border-radius: 1.75rem;
+  background: var(--soh-card-bg);
+  box-shadow: var(--soh-card-shadow);
+}
+
+.home-welcome {
+  --home-welcome-pad-x: 2rem;
+  --home-welcome-pad-top: 2rem;
+  --home-welcome-pad-bottom: 1.25rem;
+  --home-flower-height: 330px;
+  --home-flower-visible: 70%;
+  position: relative;
+  min-height: var(--home-hero-height);
+  padding: var(--home-welcome-pad-top) var(--home-welcome-pad-x) var(--home-welcome-pad-bottom);
+}
+
+.home-sermon-card,
+.home-study-book-card {
+  border: 1px solid var(--soh-card-border);
+  border-radius: 1.5rem;
+  background: var(--soh-card-bg);
+  box-shadow: var(--soh-card-shadow);
+}
+
+.home-eyebrow,
+.home-card__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--soh-eyebrow);
+  font-weight: 700;
+}
+
+.home-welcome__top {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.35rem;
+  padding-right: 44%;
+}
+
+.home-welcome__greeting {
+  margin: 1.15rem 0 0;
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.home-welcome__greeting-line {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.home-welcome__greeting-line:last-child {
+  margin-bottom: 0;
+}
+
+.home-welcome__date {
+  margin: 0;
+  color: #b4a28c;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.home-welcome__flower {
+  position: absolute;
+  right: 0;
+  bottom: var(--home-welcome-pad-bottom);
+  height: var(--home-flower-height);
+  margin: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.home-welcome__flower img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  clip-path: inset(0 calc(100% - var(--home-flower-visible)) 0 0);
+  transform: translateX(calc(100% - var(--home-flower-visible)));
+}
+
+.home-review {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: var(--home-hero-height);
+  padding: 2rem 1.75rem 1.5rem;
+  background: var(--soh-home-review-bg);
+  border-left: 1px solid rgba(29, 41, 53, 0.06);
+}
+
+.home-review__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.home-review__heading {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: #5f7385;
+  font-weight: 700;
+}
+
+.home-review__pause {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(29, 41, 53, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  color: #5f7385;
+  cursor: pointer;
+}
+
+.home-review__stage {
+  display: grid;
+  align-content: start;
+  min-height: 240px;
+  padding: 0.25rem 0.25rem 0;
+}
+
+.home-review__slide {
+  animation: home-review-fade 0.45s ease;
+}
+
+@keyframes home-review-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-review__meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.home-review__stars {
+  font-size: 1rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+
+.home-review__kind {
+  color: #5f7385;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.home-review__title {
+  margin: 0 0 0.75rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.45rem;
+  line-height: 1.25;
+}
+
+.home-review__body {
+  margin: 0;
+  color: var(--soh-subtle);
+  line-height: 1.75;
+}
+
+.home-review__meta {
+  margin: 0.85rem 0 0;
+  color: var(--soh-muted);
+  font-size: 0.9rem;
+}
+
+.home-review__dots {
+  display: flex;
+  gap: 0.45rem;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+.home-review__dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(105, 119, 135, 0.28);
+  cursor: pointer;
+}
+
+.home-review__dot.is-active {
+  width: 1.35rem;
+  background: #b78638;
+}
+
+.home-section {
+  margin-bottom: 2rem;
+}
+
+.home-section__heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.home-section__heading h2,
+.home-section__heading-title {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--soh-text);
+}
+
+.home-section__heading span:not(.home-section__heading-title) {
+  color: var(--soh-muted);
+  font-size: 0.92rem;
+}
+
+.home-sermon-row,
+.home-study-books {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.home-sermon-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.35rem 1.35rem;
+}
+
+.home-sermon-card__date {
+  margin: 0 0 0.85rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: #9aa3ad;
+  font-weight: 600;
+}
+
+.home-sermon-card h3 {
+  margin: 0 0 0.7rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--soh-text);
+}
+
+.home-sermon-card__body {
+  margin: 0;
+  flex: 1;
+  color: var(--soh-muted);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.home-sermon-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1.35rem;
+}
+
+.home-sermon-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.38rem 0.7rem;
+  border-radius: 0.45rem;
+  background: var(--soh-chip-bg);
+  color: var(--soh-chip-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home-sermon-chip:hover {
+  background: var(--soh-chip-bg-hover);
+  color: var(--soh-text);
+  text-decoration: none;
+}
+
+.home-sermon-chip .bi {
+  font-size: 0.98rem;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.home-study-book-card {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  padding: 0;
+  overflow: hidden;
+  background: var(--soh-card-bg);
+}
+
+@supports not (grid-template-columns: subgrid) {
+  .home-study-book-card {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  }
+}
+
+.home-study-book-card__book {
+  grid-column: 1;
+  padding: 1.5rem 1.35rem;
+  background: var(--soh-home-review-bg);
+}
+
+.home-study-book-card__panel {
+  grid-column: 2 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  column-gap: 1.25rem;
+  row-gap: 0.55rem;
+  align-items: start;
+  min-height: 100%;
+  padding: 1.5rem 1.35rem;
+  background: var(--soh-card-bg);
+}
+
+.home-study-book-card__panel-main {
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+}
+
+.home-study-book-card__flower {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  justify-self: end;
+  width: 5.75rem;
+  margin: 0;
+  opacity: 0.82;
+  pointer-events: none;
+}
+
+.home-study-book-card__flower.is-child {
+  width: clamp(7.5rem, 11vw, 9.5rem);
+  opacity: 0.9;
+}
+
+.home-study-book-card__flower img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.home-study-book-card h3 {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--soh-text);
+  overflow-wrap: anywhere;
+}
+
+.home-study-book-card__subtitle {
+  margin: 0.65rem 0 0;
+  color: var(--soh-subtle);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.home-study-book-card__chapter {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--soh-text);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.home-study-book-card__highlight-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.home-study-book-card__highlight-stars {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.home-study-book-card__highlight-label {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5f7385;
+  font-weight: 600;
+}
+
+.home-study-book-card__highlight-ref {
+  margin: 0.35rem 0 0.45rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--soh-text);
+}
+
+.home-study-book-card__highlight-body {
+  margin: 0;
+  color: var(--soh-subtle);
+  font-size: 0.94rem;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.home-study-book-card__highlight-translation {
+  margin: 0.55rem 0 0;
+  color: var(--soh-muted);
+  font-size: 0.86rem;
+}
+
 .study-panel .form-control {
   background: var(--soh-soft-surface-2);
   border-color: var(--soh-card-border);
@@ -646,6 +1148,23 @@ body {
 }
 
 @media (max-width: 991px) {
+  .home-hero-card,
+  .home-sermon-row,
+  .home-study-book-card {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .home-study-book-card__book,
+  .home-study-book-card__panel {
+    grid-column: 1;
+  }
+
+  .home-review {
+    border-left: 0;
+    border-top: 1px solid rgba(29, 41, 53, 0.06);
+  }
+
   .study-hero,
   .study-layout,
   .chapter-grid {
@@ -685,6 +1204,47 @@ body {
     min-height: 64px;
   }
 
+  .home-shell {
+    padding: 2rem 1rem 4rem;
+  }
+
+  .home-hero-card {
+    --home-hero-height: 360px;
+  }
+
+  .home-welcome {
+    --home-welcome-pad-x: 1.25rem;
+    --home-welcome-pad-top: 1.25rem;
+    --home-welcome-pad-bottom: 1rem;
+  }
+
+  .home-welcome__top {
+    padding-right: 38%;
+  }
+
+  .home-review {
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+
+  .home-sermon-card {
+    padding: 1.15rem;
+  }
+
+  .home-study-book-card__book,
+  .home-study-book-card__panel {
+    padding: 1.15rem;
+  }
+
+  .home-study-book-card__flower {
+    width: 4.5rem;
+    opacity: 0.75;
+  }
+
+  .home-study-book-card__flower.is-child {
+    width: 6.75rem;
+    opacity: 0.88;
+  }
+
   .study-shell {
     padding: 2rem 1rem 4rem;
   }
@@ -705,4 +1265,292 @@ body {
   .note-actions {
     flex-direction: column;
   }
+
+  .home-week-strip__days {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .calendar-month__grid {
+    gap: 0.35rem;
+  }
+}
+
+/* Calendar week strip + page */
+
+.home-week-strip {
+  padding: 1.15rem 1.25rem 1rem;
+  border: 1px solid var(--soh-card-border);
+  border-radius: 1.5rem;
+  background: var(--soh-card-bg);
+  box-shadow: var(--soh-card-shadow);
+}
+
+.home-week-strip__days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.home-week-strip__day {
+  display: grid;
+  justify-items: center;
+  gap: 0.3rem;
+  padding: 0.65rem 0.35rem 0.55rem;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  background: transparent;
+  color: var(--soh-text);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.home-week-strip__day:hover {
+  background: var(--soh-soft-surface);
+  border-color: var(--soh-card-border);
+}
+
+.home-week-strip__day.has-sermon {
+  background: var(--soh-home-review-bg);
+}
+
+.home-week-strip__day.is-today {
+  border-color: color-mix(in srgb, var(--soh-home-review-bg) 55%, var(--soh-text));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--soh-text) 12%, transparent);
+}
+
+.home-week-strip__day.is-today:not(.has-sermon) {
+  background: color-mix(in srgb, var(--soh-home-review-bg) 45%, var(--soh-card-bg));
+}
+
+.home-week-strip__weekday {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--soh-muted);
+  font-weight: 600;
+}
+
+.home-week-strip__date {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.home-week-strip__dots,
+.calendar-month__dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.2rem;
+  min-height: 0.45rem;
+}
+
+.home-week-strip__dot,
+.calendar-month__dot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  flex: 0 0 auto;
+}
+
+.home-week-strip__swatch {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 0.3rem;
+  background: var(--soh-home-review-bg);
+  border: 1px solid color-mix(in srgb, var(--soh-home-review-bg) 50%, var(--soh-text));
+}
+
+.calendar-month__dot.is-sermon {
+  background: #4a7eb8;
+}
+
+.home-week-strip__dot.is-prayer,
+.calendar-month__dot.is-prayer {
+  background: #8b6bb8;
+}
+
+.home-week-strip__dot.is-note,
+.calendar-month__dot.is-note {
+  background: #c49a45;
+}
+
+.home-week-strip__dot.is-study,
+.calendar-month__dot.is-study {
+  background: #5a8f6e;
+}
+
+.home-week-strip__legend,
+.calendar-month__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.1rem;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--soh-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.home-week-strip__legend li,
+.calendar-month__legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.calendar-shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4.5rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.calendar-panel,
+.calendar-summary {
+  border: 1px solid var(--soh-card-border);
+  border-radius: 1.5rem;
+  background: var(--soh-card-bg);
+  box-shadow: var(--soh-card-shadow);
+}
+
+.calendar-panel {
+  padding: 1.5rem 1.35rem 1.25rem;
+}
+
+.calendar-panel__header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.calendar-panel__header h1 {
+  margin: 0;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+}
+
+.calendar-panel__nav {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 1px solid var(--soh-card-border);
+  border-radius: 999px;
+  background: var(--soh-soft-surface);
+  color: var(--soh-subtle);
+}
+
+.calendar-month__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.35rem;
+  margin-bottom: 0.45rem;
+  text-align: center;
+  color: var(--soh-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.calendar-month__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.calendar-month__empty {
+  min-height: 3.4rem;
+}
+
+.calendar-month__day {
+  display: grid;
+  justify-items: center;
+  gap: 0.25rem;
+  min-height: 3.4rem;
+  padding: 0.45rem 0.25rem 0.35rem;
+  border: 1px solid transparent;
+  border-radius: 0.85rem;
+  background: transparent;
+  color: var(--soh-text);
+  cursor: pointer;
+}
+
+.calendar-month__day:hover {
+  background: var(--soh-soft-surface);
+  border-color: var(--soh-card-border);
+}
+
+.calendar-month__day.is-today {
+  background: var(--soh-home-review-bg);
+}
+
+.calendar-month__day.is-selected {
+  border-color: color-mix(in srgb, var(--soh-text) 25%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--soh-text) 10%, transparent);
+}
+
+.calendar-month__daynum {
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.calendar-summary {
+  padding: 1.5rem 1.35rem;
+}
+
+.calendar-summary h2 {
+  margin: 0 0 1rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.35rem;
+}
+
+.calendar-summary__list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.calendar-summary__card {
+  padding: 1rem 1.05rem;
+  border-radius: 1rem;
+  background: var(--soh-soft-surface);
+  border: 1px solid var(--soh-card-border);
+}
+
+.calendar-summary__card h3 {
+  margin: 0.2rem 0 0.35rem;
+  font-size: 1.05rem;
+}
+
+.calendar-summary__kind {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--soh-muted);
+}
+
+.calendar-summary__meta {
+  margin: 0 0 0.35rem;
+  color: var(--soh-muted);
+  font-size: 0.88rem;
+}
+
+.calendar-summary__body {
+  margin: 0;
+  color: var(--soh-subtle);
+  line-height: 1.65;
+}
+
+.calendar-summary__empty {
+  margin: 0;
+  color: var(--soh-muted);
 }
