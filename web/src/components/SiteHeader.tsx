@@ -2,10 +2,11 @@ import type { SessionUser } from '../session'
 
 type SiteHeaderProps = {
   user: SessionUser | null
-  appScreen?: 'home' | 'study' | 'calendar'
+  appScreen?: 'home' | 'study' | 'calendar' | 'tags' | 'chapter' | 'verse' | 'sermon'
   onHomeClick?: () => void
   onStudyClick?: () => void
   onCalendarClick?: () => void
+  onTagsClick?: () => void
   onLoginClick: () => void
   onSignOut: () => void
 }
@@ -16,6 +17,7 @@ export function SiteHeader({
   onHomeClick,
   onStudyClick,
   onCalendarClick,
+  onTagsClick,
   onLoginClick,
   onSignOut,
 }: SiteHeaderProps) {
@@ -46,6 +48,13 @@ export function SiteHeader({
             onClick={onCalendarClick}
           >
             Calendar
+          </button>
+          <button
+            type="button"
+            className={`btn btn-sm ${appScreen === 'tags' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={onTagsClick}
+          >
+            Tags
           </button>
         </>
       ) : null}

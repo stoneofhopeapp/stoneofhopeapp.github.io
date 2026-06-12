@@ -1,0 +1,173 @@
+[
+  {
+    "id": "aaaaaaaaaaaaaaaaaaaaaa01",
+    "noteType": "bibleVerse",
+    "content": "1:1 In the beginning God created the heaven and the earth. [KJV]",
+    "bookOrd": 1,
+    "chapterOrd": 1,
+    "chapterKey": "CH:1:1",
+    "verseStart": 1,
+    "verseEnd": 1,
+    "versionAbbr": "KJV",
+    "refKey": "VS:1:1:1-1",
+    "createdAt": "2026-05-09T17:53:51Z",
+    "updatedAt": "2026-05-09T17:53:51Z",
+    "starLevel": 0,
+    "tagIds": []
+  },
+  {
+    "id": "aaaaaaaaaaaaaaaaaaaaaa02",
+    "noteType": "bibleVerse",
+    "content": "23:1 The LORD is my shepherd; I shall not want. [KJV]",
+    "bookOrd": 19,
+    "chapterOrd": 23,
+    "chapterKey": "CH:19:23",
+    "verseStart": 1,
+    "verseEnd": 3,
+    "versionAbbr": "KJV",
+    "refKey": "VS:19:23:1-3",
+    "createdAt": "2026-05-11T08:15:00Z",
+    "updatedAt": "2026-05-11T08:15:00Z",
+    "starLevel": 2,
+    "tagIds": ["68525d7a692c7765f6152a8f"],
+    "comments": [
+      {
+        "content": "Comfort in seasons of uncertainty — the Shepherd leads and provides.",
+        "createdAt": "2026-05-11T08:20:00Z"
+      }
+    ]
+  },
+  {
+    "id": "aaaaaaaaaaaaaaaaaaaaaa03",
+    "noteType": "bibleVerse",
+    "content": "3:16 All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness. [KJV]",
+    "bookOrd": 55,
+    "chapterOrd": 3,
+    "chapterKey": "CH:55:3",
+    "verseStart": 16,
+    "verseEnd": 16,
+    "versionAbbr": "KJV",
+    "refKey": "VS:55:3:16-16",
+    "createdAt": "2026-05-24T19:30:00Z",
+    "updatedAt": "2026-05-24T19:30:00Z",
+    "starLevel": 1,
+    "linkedSermonId": "6a166ac5f315e27a81e5b127",
+    "tagIds": ["68525d7a692c7765f6152a90"],
+    "comments": [
+      {
+        "content": "Scripture is sufficient for teaching and correction — anchor for church life.",
+        "createdAt": "2026-05-24T19:45:00Z"
+      }
+    ]
+  },
+  {
+    "id": "aaaaaaaaaaaaaaaaaaaaaa04",
+    "noteType": "prayer",
+    "content": "Lord, please give wisdom and humility to those who serve as leaders in our church. Help us to honor one another in worship.",
+    "createdAt": "2026-05-08T12:59:23Z",
+    "updatedAt": "2026-06-07T19:42:23Z",
+    "starLevel": 0,
+    "isOngoing": false,
+    "isAnswered": true,
+    "answeredAt": "2026-06-01T16:00:00Z",
+    "calendarDay": "2026-05-08",
+    "tagIds": ["68525d7a692c7765f6152a8d", "68525d7a692c7765f6152a8e"]
+  },
+  {
+    "id": "aaaaaaaaaaaaaaaaaaaaaa05",
+    "noteType": "prayer",
+    "content": "Father, I am still waiting on clarity about a job decision. Give me patience and trust in Your timing.",
+    "createdAt": "2026-06-01T07:00:00Z",
+    "updatedAt": "2026-06-07T12:00:00Z",
+    "starLevel": 0,
+    "isOngoing": true,
+    "isAnswered": false,
+    "calendarDay": "2026-06-01",
+    "tagIds": ["68525d7a692c7765f6152a8d"]
+  },
+  {
+    "id": "aaaaaaaaaaaaaaaaaaaaaa06",
+    "noteType": "prayer",
+    "content": "Thank You for answered prayer regarding my mother's health. She is recovering well.",
+    "createdAt": "2026-05-20T06:30:00Z",
+    "updatedAt": "2026-05-22T07:49:20Z",
+    "starLevel": 0,
+    "isOngoing": false,
+    "isAnswered": true,
+    "answeredAt": "2026-05-22T07:49:20Z",
+    "calendarDay": "2026-05-20",
+    "tagIds": ["68525d7a692c7765f6152a8f"]
+  },
+  {
+    "id": "aaaaaaaaaaaaaaaaaaaaaa07",
+    "noteType": "note",
+    "content": "Reminder: review 1 Timothy series notes before small group on Thursday.",
+    "createdAt": "2026-05-16T10:00:00Z",
+    "updatedAt": "2026-05-16T10:00:00Z",
+    "starLevel": 0,
+    "tagIds": ["68525d7a692c7765f6152a90"]
+  },
+  {
+    "id": "aaaaaaaaaaaaaaaaaaaaaa08",
+    "noteType": "personalGrowth",
+    "content": "This week I want to practice slower mornings: read one chapter, pray without rushing, and listen before speaking at work.",
+    "createdAt": "2026-05-13T06:00:00Z",
+    "updatedAt": "2026-05-13T06:00:00Z",
+    "starLevel": 0,
+    "tagIds": []
+  },
+  {
+    "id": "aaaaaaaaaaaaaaaaaaaaaa09",
+    "noteType": "sermonNote",
+    "content": "David wanted to build God a house, but God promised to build David a house instead. The covenant points forward to Christ's eternal kingdom.",
+    "bookOrd": 10,
+    "chapterOrd": 7,
+    "chapterKey": "CH:10:7",
+    "verseStart": 12,
+    "verseEnd": 16,
+    "versionAbbr": "KJV",
+    "refKey": "VS:10:7:12-16",
+    "createdAt": "2026-05-21T20:00:00Z",
+    "updatedAt": "2026-05-21T20:30:00Z",
+    "starLevel": 0,
+    "linkedSermonId": "6a166ac5f315e27a81e5b11e",
+    "tagIds": ["68525d7a692c7765f6152a8e"]
+  },
+  {
+    "id": "aaaaaaaaaaaaaaaaaaaaaa0a",
+    "noteType": "sermonNote",
+    "content": "Qualifications for overseers: above reproach, faithful, able to teach. Character matters more than charisma.",
+    "bookOrd": 54,
+    "chapterOrd": 3,
+    "chapterKey": "CH:54:3",
+    "verseStart": 1,
+    "verseEnd": 7,
+    "versionAbbr": "KJV",
+    "refKey": "VS:54:3:1-7",
+    "createdAt": "2026-05-17T19:00:00Z",
+    "updatedAt": "2026-05-17T19:45:00Z",
+    "starLevel": 0,
+    "linkedSermonId": "6a166ac5f315e27a81e5b123",
+    "tagIds": ["68525d7a692c7765f6152a90"]
+  },
+  {
+    "id": "aaaaaaaaaaaaaaaaaaaaaa0b",
+    "noteType": "note",
+    "content": "Worship order: prayer for all, modest dress, teach with love and sound doctrine.",
+    "createdAt": "2026-05-10T18:30:00Z",
+    "updatedAt": "2026-05-10T18:30:00Z",
+    "starLevel": 0,
+    "linkedSermonId": "6a166ac5f315e27a81e5b122",
+    "tagIds": []
+  },
+  {
+    "id": "aaaaaaaaaaaaaaaaaaaaaa0c",
+    "noteType": "image",
+    "content": "/assets/img/flowers/flower-2.png",
+    "createdAt": "2026-05-21T21:00:00Z",
+    "updatedAt": "2026-05-21T21:00:00Z",
+    "starLevel": 0,
+    "linkedSermonId": "6a166ac5f315e27a81e5b11e",
+    "tagIds": []
+  }
+]

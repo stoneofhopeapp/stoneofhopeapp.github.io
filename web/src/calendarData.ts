@@ -1,3 +1,13 @@
+import { mockNotesToCalendarDayRecords } from './mockDataAdapter'
+import {
+  allSermonMocks,
+  preachedOnToDateKey,
+  sermonCalendarDateKeys,
+  sermonToCalendarActivity,
+} from './sermonMockData'
+
+export { sermonCalendarDateKeys }
+
 export type CalendarActivityKind = 'sermon' | 'prayer' | 'note' | 'study'
 
 export type CalendarActivity = {
@@ -19,7 +29,15 @@ export const calendarActivityLabels: Record<CalendarActivityKind, string> = {
   study: 'Study',
 }
 
-const dayRecords: DayRecord[] = [
+export const calendarMarkerOrder: CalendarActivityKind[] = ['prayer', 'note', 'study']
+
+export const calendarWeekdayLetters = ['S', 'M', 'T', 'W', 'T', 'F', 'S'] as const
+
+export function formatWeekdayLetter(date: Date): string {
+  return calendarWeekdayLetters[date.getDay()]
+}
+
+const personalDayRecords: DayRecord[] = [
   {
     date: '2026-06-03',
     activities: [
@@ -56,25 +74,8 @@ const dayRecords: DayRecord[] = [
   {
     date: '2026-06-08',
     activities: [
-      {
-        kind: 'sermon',
-        title: 'A Living Hope',
-        meta: '1 Peter 1:1–9',
-        body: 'Peter writes to scattered believers and begins with praise—not circumstances.',
-      },
       { kind: 'study', title: '1 Peter 1', meta: 'vv. 3–5', body: 'Living hope is anchored in resurrection, not optimism.' },
       { kind: 'note', title: 'God keeps us', body: 'God keeps the inheritance and keeps us.' },
-    ],
-  },
-  {
-    date: '2026-06-01',
-    activities: [
-      {
-        kind: 'sermon',
-        title: 'A Living Hope',
-        meta: '1 Peter 1:1–9',
-        body: 'Peter writes to scattered believers and begins with praise—not circumstances.',
-      },
     ],
   },
   {
@@ -89,16 +90,8 @@ const dayRecords: DayRecord[] = [
     ],
   },
   {
-    date: '2026-06-11',
-    activities: [{ kind: 'sermon', title: 'Faith Tested by Fire', meta: '1 Peter 1:6–9', body: 'Trials reveal the genuineness of faith.' }],
-  },
-  {
     date: '2026-06-15',
     activities: [{ kind: 'note', title: 'Weekly reflection', body: 'What trial most needs to be seen through God’s perspective?' }],
-  },
-  {
-    date: '2026-06-18',
-    activities: [{ kind: 'sermon', title: 'Ebenezer: Thus Far', meta: '1 Samuel 7:12', body: 'Spiritual memory strengthens present obedience.' }],
   },
   {
     date: '2026-06-22',
@@ -109,6 +102,30 @@ const dayRecords: DayRecord[] = [
   },
 ]
 
+function buildDayRecords(): DayRecord[] {
+  const byDate = new Map<string, CalendarActivity[]>()
+
+  for (const record of personalDayRecords) {
+    byDate.set(record.date, [...record.activities])
+  }
+
+  for (const [dateKey, activities] of mockNotesToCalendarDayRecords()) {
+    const existing = byDate.get(dateKey) ?? []
+    byDate.set(dateKey, [...existing, ...activities])
+  }
+
+  for (const sermon of allSermonMocks) {
+    const dateKey = preachedOnToDateKey(sermon.preachedOn)
+    const existing = byDate.get(dateKey) ?? []
+    byDate.set(dateKey, [...existing, sermonToCalendarActivity(sermon)])
+  }
+
+  return [...byDate.entries()]
+    .map(([date, activities]) => ({ date, activities }))
+    .sort((a, b) => a.date.localeCompare(b.date))
+}
+
+const dayRecords = buildDayRecords()
 const recordsByDate = new Map(dayRecords.map((record) => [record.date, record]))
 
 export function formatDateKey(date: Date): string {

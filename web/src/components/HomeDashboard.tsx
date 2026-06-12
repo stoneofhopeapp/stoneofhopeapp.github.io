@@ -15,9 +15,14 @@ import {
   type RecentSermon,
   type RecentStudyBook,
   type ReviewItem,
-  type SermonMediaLinks,
   type StudyHighlight,
 } from '../homeData'
+import { resolveVerseLines } from '../scriptureDisplay'
+import { chapterHash } from '../chapterNavigation'
+import { navigateToBibleBook } from '../appNavigation'
+import { CardTitleRow, NumberedVerseText, ScriptureReference } from './ScriptureBlock'
+import { ContentKindBadge, ReviewKindBadge } from './ContentKindBadge'
+import { SermonMediaActions } from './SermonMediaActions'
 
 type HomeDashboardProps = {
   user: SessionUser
@@ -33,63 +38,56 @@ function StarRow({ level }: { level: 1 | 2 | 3 }) {
   )
 }
 
-const sermonActionConfig: {
-  key: keyof SermonMediaLinks
-  label: string
-  icon: string
-}[] = [
-  { key: 'video', label: 'Video', icon: 'bi-play-fill' },
-  { key: 'audio', label: 'Audio', icon: 'bi-volume-up-fill' },
-  { key: 'pdf', label: 'PDF', icon: 'bi-file-earmark-pdf' },
-  { key: 'notes', label: 'Notes', icon: 'bi-journal-text' },
-]
-
 function SermonCard({ sermon }: { sermon: RecentSermon }) {
-  const actions = sermonActionConfig.filter(({ key }) => Boolean(sermon.media[key]))
+  const chapterLink = chapterHash(sermon.bookOrd, sermon.chapterOrd)
 
   return (
     <article className="home-sermon-card">
-      <p className="home-sermon-card__date">{sermon.preachedOn.toUpperCase()}</p>
-      <h3>{sermon.title}</h3>
-      <p className="home-sermon-card__body">{sermon.excerpt}</p>
-      {actions.length > 0 ? (
-        <div className="home-sermon-card__actions">
-          {actions.map(({ key, label, icon }) => (
-            <a key={key} className="home-sermon-chip" href={sermon.media[key]}>
-              <i className={`bi ${icon}`} aria-hidden />
-              {label}
-            </a>
-          ))}
-        </div>
-      ) : null}
+      <a className="home-sermon-card__link" href={chapterLink}>
+        <p className="home-sermon-card__date">{sermon.preachedOn.toUpperCase()}</p>
+        <h3>{sermon.title}</h3>
+        <p className="home-sermon-card__body">{sermon.excerpt}</p>
+        <p className="home-sermon-card__passage">{sermon.passage}</p>
+      </a>
+      <SermonMediaActions sermonId={sermon.id} />
     </article>
   )
 }
 
 function StudyHighlightBlock({ highlight }: { highlight: StudyHighlight }) {
-  const label =
-    highlight.kind === 'note'
-      ? 'Note'
-      : highlight.starred
-        ? 'Starred verse'
-        : 'Verse'
+  if (highlight.kind === 'note') {
+    const reference = `${highlight.bookName} ${highlight.chapterOrd}:${highlight.verseRange}`
+    const verseLines = resolveVerseLines(
+      highlight.verseText,
+      highlight.verseRange,
+      highlight.verseLines,
+    )
 
-  const reference =
-    highlight.kind === 'note' ? highlight.passage : highlight.reference
+    return (
+      <div className="home-study-book-card__highlight">
+        <ContentKindBadge kind="note" label="Study note" className="home-study-book-card__kind" />
+        <CardTitleRow starred={highlight.starred}>
+          <ScriptureReference reference={reference} inline />
+        </CardTitleRow>
+        <NumberedVerseText
+          lines={verseLines}
+          className="home-study-book-card__highlight-verse"
+        />
+        <p className="home-study-book-card__highlight-note">{highlight.body}</p>
+      </div>
+    )
+  }
+
+  const label = highlight.starred ? 'Starred verse' : 'Verse'
 
   return (
     <div className="home-study-book-card__highlight">
-      <div className="home-study-book-card__highlight-meta">
-        {highlight.kind === 'verse' && highlight.starred ? (
-          <span className="home-study-book-card__highlight-stars" aria-hidden>
-            🌟
-          </span>
-        ) : null}
-        <p className="home-study-book-card__highlight-label">{label}</p>
-      </div>
-      <p className="home-study-book-card__highlight-ref">{reference}</p>
+      <ContentKindBadge kind="verse" label={label} className="home-study-book-card__kind" />
+      <CardTitleRow starred={highlight.starred}>
+        <ScriptureReference reference={highlight.reference} inline />
+      </CardTitleRow>
       <p className="home-study-book-card__highlight-body">{highlight.body}</p>
-      {highlight.kind === 'verse' && highlight.translation ? (
+      {highlight.translation ? (
         <p className="home-study-book-card__highlight-translation">{highlight.translation}</p>
       ) : null}
     </div>
@@ -110,7 +108,6 @@ function StudyBookCard({ book }: { book: RecentStudyBook }) {
         ) : null}
       </div>
       <div className="home-study-book-card__panel">
-        <p className="home-study-book-card__chapter">{book.currentChapter}</p>
         <div className="home-study-book-card__panel-main">
           <StudyHighlightBlock highlight={highlight} />
         </div>
@@ -130,7 +127,7 @@ function ReviewSlide({ item }: { item: ReviewItem }) {
     <article className="home-review__slide" aria-live="polite">
       <div className="home-review__meta-row">
         <StarRow level={item.starLevel} />
-        <span className="home-review__kind">{reviewKindName[item.kind]}</span>
+        <ReviewKindBadge kind={item.kind} label={reviewKindName[item.kind]} />
       </div>
       <h2 className="home-review__title">{item.title}</h2>
       <p className="home-review__body">{item.body}</p>
@@ -165,6 +162,7 @@ export function HomeDashboard({ user }: HomeDashboardProps) {
   const weekMonthLabel = weekDays[0]
     ? formatMonthLabel(weekDays[0].getFullYear(), weekDays[0].getMonth())
     : ''
+  const latestSermon = recentSermons[0]
 
   return (
     <main className="home-shell">
@@ -234,7 +232,20 @@ export function HomeDashboard({ user }: HomeDashboardProps) {
       <section className="home-section">
         <div className="home-section__heading">
           <h2>Recent sermons</h2>
-          <span>Connected teaching</span>
+          {latestSermon ? (
+            <a
+              className="home-section__heading-link"
+              href={`#tags/bible/${latestSermon.bookOrd}`}
+              onClick={(event) => {
+                event.preventDefault()
+                navigateToBibleBook(latestSermon.bookOrd)
+              }}
+            >
+              Browse by Books
+            </a>
+          ) : (
+            <span>Browse by Books</span>
+          )}
         </div>
         <div className="home-sermon-row">
           {recentSermons.map((sermon) => (

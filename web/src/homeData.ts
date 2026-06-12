@@ -1,3 +1,6 @@
+import type { VerseLine } from './scriptureDisplay'
+import { mockSermonsToRecentSermons, mockStarredToReviewItems } from './mockDataAdapter'
+
 export type ReviewItemKind = 'verse' | 'prayer' | 'note'
 
 export type ReviewItem = {
@@ -30,14 +33,21 @@ export type RecentSermon = {
   preachedOn: string
   passage: string
   excerpt: string
+  bookOrd: number
+  chapterOrd: number
   media: SermonMediaLinks
 }
 
 export type StudyHighlight =
   | {
       kind: 'note'
-      passage: string
+      bookName: string
+      chapterOrd: number
+      verseRange: string
+      verseText: string
+      verseLines?: VerseLine[]
       body: string
+      starred?: boolean
     }
   | {
       kind: 'verse'
@@ -56,6 +66,7 @@ export type RecentStudyBook = {
 }
 
 export const starredReviewPool: ReviewItem[] = [
+  ...mockStarredToReviewItems(),
   {
     id: 'star-verse-1',
     kind: 'verse',
@@ -168,41 +179,7 @@ export function pickStarredReviewItems(now = new Date(), count = STARRED_CAROUSE
   return seededShuffle(starredReviewPool, seed).slice(0, count)
 }
 
-export const recentSermons: RecentSermon[] = [
-  {
-    id: 'sermon-1',
-    title: 'A Living Hope',
-    speaker: 'Pastor John',
-    church: 'Riverside Calvary Chapel',
-    preachedOn: 'June 1, 2026',
-    passage: '1 Peter 1:1–9',
-    excerpt:
-      'Peter writes to scattered believers and begins with praise—not circumstances. The living hope flows from Christ’s resurrection.',
-    media: { video: '#', audio: '#', pdf: '#', notes: '#' },
-  },
-  {
-    id: 'sermon-2',
-    title: 'Faith Tested by Fire',
-    speaker: 'Pastor John',
-    church: 'Riverside Calvary Chapel',
-    preachedOn: 'May 25, 2026',
-    passage: '1 Peter 1:6–9',
-    excerpt:
-      'Trials are not a sign of abandonment. They reveal the genuineness of faith and prepare us for glory.',
-    media: { video: '#', audio: '#', pdf: '#', notes: '#' },
-  },
-  {
-    id: 'sermon-3',
-    title: 'Ebenezer: Thus Far',
-    speaker: 'Guest Speaker',
-    church: 'Riverside Calvary Chapel',
-    preachedOn: 'May 18, 2026',
-    passage: '1 Samuel 7:12',
-    excerpt:
-      'Samuel raises a stone of remembrance. Spiritual memory strengthens present obedience.',
-    media: { video: '#', notes: '#' },
-  },
-]
+export const recentSermons: RecentSermon[] = mockSermonsToRecentSermons().slice(0, 3)
 
 export const recentStudyBooks: RecentStudyBook[] = [
   {
@@ -212,8 +189,27 @@ export const recentStudyBooks: RecentStudyBook[] = [
     currentChapter: 'Chapter 1',
     highlight: {
       kind: 'note',
-      passage: 'vv. 3–5',
+      bookName: '1 Peter',
+      chapterOrd: 1,
+      verseRange: '3–5',
+      verseText:
+        'Blessed be the God and Father of our Lord Jesus Christ, who according to His abundant mercy has begotten us again to a living hope through the resurrection of Jesus Christ from the dead, to an inheritance incorruptible and undefiled and that does not fade away, reserved in heaven for you, who are kept by the power of God through faith for salvation ready to be revealed in the last time.',
+      verseLines: [
+        {
+          number: 3,
+          text: 'Blessed be the God and Father of our Lord Jesus Christ, who according to His abundant mercy has begotten us again to a living hope through the resurrection of Jesus Christ from the dead,',
+        },
+        {
+          number: 4,
+          text: 'to an inheritance incorruptible and undefiled and that does not fade away, reserved in heaven for you,',
+        },
+        {
+          number: 5,
+          text: 'who are kept by the power of God through faith for salvation ready to be revealed in the last time.',
+        },
+      ],
       body: '“Living hope” is not optimism—it is anchored in resurrection. God keeps the inheritance and keeps us.',
+      starred: true,
     },
   },
 ]

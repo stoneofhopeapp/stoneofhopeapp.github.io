@@ -1,14 +1,12 @@
 import {
-  calendarActivityLabels,
   formatDateKey,
-  formatWeekdayShort,
+  formatWeekdayLetter,
   getActivityKindsForDate,
   getLast7Days,
+  calendarMarkerOrder,
   openCalendarPage,
-  type CalendarActivityKind,
 } from '../calendarData'
-
-const markerOrder: CalendarActivityKind[] = ['prayer', 'note', 'study']
+import { CalendarLegend } from './CalendarLegend'
 
 type WeekStripProps = {
   now?: Date
@@ -25,22 +23,30 @@ export function WeekStrip({ now = new Date() }: WeekStripProps) {
           const dateKey = formatDateKey(day)
           const kinds = getActivityKindsForDate(dateKey)
           const hasSermon = kinds.includes('sermon')
-          const markerKinds = markerOrder.filter((kind) => kinds.includes(kind))
+          const markerKinds = calendarMarkerOrder.filter((kind) => kinds.includes(kind))
           const isToday = dateKey === todayKey
+          const isWeekend = day.getDay() === 0 || day.getDay() === 6
 
           return (
             <button
               key={dateKey}
               type="button"
-              className={`home-week-strip__day${isToday ? ' is-today' : ''}${hasSermon ? ' has-sermon' : ''}`}
+              className={[
+                'home-week-strip__day',
+                isToday ? 'is-today' : '',
+                isWeekend ? 'is-weekend' : '',
+                hasSermon ? 'has-sermon' : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
               onClick={() => openCalendarPage(dateKey)}
-              aria-label={`${formatWeekdayShort(day)} ${day.getDate()}, open calendar`}
+              aria-label={`${formatWeekdayLetter(day)} ${day.getDate()}, open calendar`}
             >
-              <span className="home-week-strip__weekday">{formatWeekdayShort(day)}</span>
+              <span className="home-week-strip__weekday">{formatWeekdayLetter(day)}</span>
               <span className="home-week-strip__date">{day.getDate()}</span>
-              <span className="home-week-strip__dots" aria-hidden={markerKinds.length === 0}>
+              <span className="calendar-month__markers" aria-hidden={markerKinds.length === 0}>
                 {markerKinds.map((kind) => (
-                  <span key={kind} className={`home-week-strip__dot is-${kind}`} />
+                  <span key={kind} className={`calendar-month__marker is-${kind}`} />
                 ))}
               </span>
             </button>
@@ -48,18 +54,7 @@ export function WeekStrip({ now = new Date() }: WeekStripProps) {
         })}
       </div>
 
-      <ul className="home-week-strip__legend">
-        <li>
-          <span className="home-week-strip__swatch" aria-hidden />
-          {calendarActivityLabels.sermon}
-        </li>
-        {markerOrder.map((kind) => (
-          <li key={kind}>
-            <span className={`home-week-strip__dot is-${kind}`} aria-hidden />
-            {calendarActivityLabels[kind]}
-          </li>
-        ))}
-      </ul>
+      <CalendarLegend className="home-week-strip__legend calendar-month__legend" />
     </div>
   )
 }

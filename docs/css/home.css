@@ -1,0 +1,311 @@
+/* Stone of Hope — marketing homepage */
+
+:root {
+  --soh-bg:
+    radial-gradient(circle at top left, rgba(211, 175, 122, 0.18), transparent 28%),
+    linear-gradient(180deg, #f6efe4 0%, #f4f0ea 44%, #eef3ef 100%);
+  --soh-text: #1d2935;
+  --soh-muted: #697787;
+  --soh-subtle: #405261;
+  --soh-eyebrow: #7e6a4e;
+  --soh-card-bg: rgba(255, 255, 255, 0.92);
+  --soh-card-border: rgba(29, 41, 53, 0.08);
+  --soh-card-shadow: 0 20px 48px rgba(29, 41, 53, 0.07);
+  --soh-accent: #b78638;
+  --soh-max: 1000px;
+  --soh-serif: Georgia, 'Times New Roman', serif;
+  --soh-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--soh-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--soh-text);
+  background: var(--soh-bg);
+}
+
+a {
+  color: var(--soh-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.soh-shell {
+  width: min(var(--soh-max), calc(100% - 3rem));
+  margin: 0 auto;
+}
+
+kbd {
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--soh-card-border);
+  background: #fff;
+  font: inherit;
+  font-weight: 700;
+  color: var(--soh-accent);
+}
+
+/* Nav */
+
+.soh-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--soh-card-border);
+}
+
+.soh-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 0;
+}
+
+.soh-brand {
+  font-family: var(--soh-serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--soh-text);
+}
+
+.soh-brand:hover {
+  color: var(--soh-accent);
+  text-decoration: none;
+}
+
+.soh-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.soh-nav__link {
+  color: var(--soh-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.soh-btn {
+  display: inline-flex;
+  padding: 0.6rem 1.15rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #c9a05a, #e0bd7b);
+  color: #1a1208;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.soh-btn:hover {
+  text-decoration: none;
+  background: linear-gradient(135deg, #d4ab63, #edd5a8);
+}
+
+/* Hero */
+
+.soh-hero {
+  padding: 3rem 0 2rem;
+}
+
+.soh-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: center;
+}
+
+.soh-eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--soh-eyebrow);
+  font-weight: 700;
+}
+
+.soh-hero h1 {
+  margin: 0;
+  font-family: var(--soh-serif);
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  line-height: 1.2;
+}
+
+.soh-hero__ref {
+  margin: 0.4rem 0 0;
+  color: var(--soh-muted);
+  font-size: 0.95rem;
+}
+
+.soh-hero__lead {
+  margin: 1.1rem 0 1.4rem;
+  max-width: 28rem;
+  color: var(--soh-subtle);
+}
+
+.soh-hero__shot {
+  margin: 0;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 1px solid var(--soh-card-border);
+  box-shadow: var(--soh-card-shadow);
+}
+
+/* Showcase */
+
+.soh-showcase {
+  padding: 1rem 0 2.5rem;
+}
+
+.soh-showcase__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 2rem;
+  align-items: center;
+  padding: 2rem 0;
+  border-top: 1px solid var(--soh-card-border);
+}
+
+.soh-showcase__row--flip .soh-showcase__media {
+  order: 2;
+}
+
+.soh-showcase__row--flip .soh-showcase__text {
+  order: 1;
+}
+
+.soh-showcase__media {
+  margin: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--soh-card-border);
+  box-shadow: var(--soh-card-shadow);
+}
+
+.soh-showcase__text h2 {
+  margin: 0 0 0.6rem;
+  font-family: var(--soh-serif);
+  font-size: 1.5rem;
+}
+
+.soh-showcase__text p {
+  margin: 0;
+  max-width: 30rem;
+  color: var(--soh-muted);
+}
+
+/* Web aside — one quiet line */
+
+.soh-aside {
+  padding: 0 0 2.5rem;
+}
+
+.soh-aside__label {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--soh-eyebrow);
+  font-weight: 700;
+}
+
+.soh-aside__body {
+  margin: 0;
+  max-width: 36rem;
+  padding: 1rem 1.15rem;
+  border-left: 3px solid rgba(183, 134, 56, 0.45);
+  color: var(--soh-muted);
+  font-size: 0.95rem;
+}
+
+/* CTA */
+
+.soh-cta {
+  margin-bottom: 3rem;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 1.25rem;
+  border: 1px solid var(--soh-card-border);
+  background: var(--soh-card-bg);
+  box-shadow: var(--soh-card-shadow);
+}
+
+.soh-cta__verse {
+  margin: 0 0 1.25rem;
+  font-family: var(--soh-serif);
+  font-style: italic;
+  color: var(--soh-subtle);
+}
+
+/* Footer */
+
+.soh-footer {
+  padding: 1.75rem 0 2.25rem;
+  border-top: 1px solid var(--soh-card-border);
+  color: var(--soh-muted);
+  font-size: 0.85rem;
+}
+
+.soh-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0 0 0.6rem;
+  padding: 0;
+  list-style: none;
+}
+
+.soh-footer__links a {
+  color: var(--soh-muted);
+  font-weight: 600;
+}
+
+.soh-footer__copy {
+  margin: 0;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+  .soh-hero__grid,
+  .soh-showcase__row {
+    grid-template-columns: 1fr;
+  }
+
+  .soh-showcase__row--flip .soh-showcase__media,
+  .soh-showcase__row--flip .soh-showcase__text {
+    order: unset;
+  }
+
+  .soh-hero__shot {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .soh-shell {
+    width: min(var(--soh-max), calc(100% - 1.5rem));
+  }
+
+  .soh-nav__link--hide-sm {
+    display: none;
+  }
+}

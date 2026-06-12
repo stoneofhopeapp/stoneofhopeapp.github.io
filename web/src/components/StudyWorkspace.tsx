@@ -1,10 +1,25 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { browseTags } from '../browseData'
 import type { SessionUser } from '../session'
 import {
   featuredBook,
   featuredBookScriptureByChapterId,
+  getScriptureForBookChapter,
+  CANONICAL_STUDY_ROUTE,
+  STUDY_PLACEHOLDER_CHAPTER_ID,
+  STUDY_PLACEHOLDER_CHAPTER_ORD,
+  STUDY_CONNECTED_BOOK_ORD,
   type StudyChapter,
 } from '../studyData'
+import {
+  formatStudyChapterLabel,
+  openStudyChapter,
+  readStudyRouteFromHash,
+  resolveStudyChapterId,
+} from '../studyNavigation'
+import { ChapterContextPanel } from './ChapterContextPanel'
+
+const tagNameMap = Object.fromEntries(browseTags.map((tag) => [tag.id, tag.name]))
 
 type StudyNoteComment = {
   id: string
@@ -115,6 +130,8 @@ function saveWorkspaceState(uid: string, state: WorkspaceState) {
 }
 
 export function StudyWorkspace({ user, theme, onToggleTheme }: StudyWorkspaceProps) {
+  const [studyRoute, setStudyRoute] = useState(() => readStudyRouteFromHash())
+  const chapterStudyRef = useRef<HTMLElement>(null)
   const [workspaceState, setWorkspaceState] = useState<WorkspaceState>(() =>
     loadWorkspaceState(user.uid),
   )
@@ -129,23 +146,73 @@ export function StudyWorkspace({ user, theme, onToggleTheme }: StudyWorkspacePro
     saveWorkspaceState(user.uid, workspaceState)
   }, [user.uid, workspaceState])
 
+  useEffect(() => {
+    const sync = () => setStudyRoute(readStudyRouteFromHash())
+    window.addEventListener('hashchange', sync)
+    return () => window.removeEventListener('hashchange', sync)
+  }, [])
+
+  useEffect(() => {
+    const match = window.location.hash.replace(/^#/, '').match(/^study\/(\d+)\/(\d+)$/)
+    if (!match) return
+
+    const bookOrd = Number(match[1])
+    const chapterOrd = Number(match[2])
+    const { bookOrd: canonicalBookOrd, chapterOrd: canonicalChapterOrd } = CANONICAL_STUDY_ROUTE
+
+    if (bookOrd !== canonicalBookOrd || chapterOrd !== canonicalChapterOrd) {
+      openStudyChapter(bookOrd, chapterOrd)
+    }
+  }, [studyRoute.bookOrd, studyRoute.chapterOrd])
+
+  const isRoutedChapter = studyRoute.bookOrd != null && studyRoute.chapterOrd != null
+  const routedChapterId =
+    isRoutedChapter && studyRoute.bookOrd != null && studyRoute.chapterOrd != null
+      ? resolveStudyChapterId(studyRoute.bookOrd, studyRoute.chapterOrd)
+      : null
+
+  useEffect(() => {
+    if (!routedChapterId) return
+    setWorkspaceState((current) => ({
+      ...current,
+      lastChapterId: routedChapterId,
+    }))
+  }, [routedChapterId])
+
+  useEffect(() => {
+    if (!isRoutedChapter) return
+    requestAnimationFrame(() => {
+      chapterStudyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }, [isRoutedChapter, studyRoute.bookOrd, studyRoute.chapterOrd])
+
   const activeChapter =
-    featuredBook.chapters.find((chapter) => chapter.id === workspaceState.lastChapterId) ??
+    featuredBook.chapters.find((chapter) => chapter.id === STUDY_PLACEHOLDER_CHAPTER_ID) ??
     featuredBook.chapters[0]
 
-  const activeScriptureSet = featuredBookScriptureByChapterId[activeChapter.id]
+  const activeScriptureSet = isRoutedChapter
+    ? getScriptureForBookChapter(studyRoute.bookOrd!, studyRoute.chapterOrd!)
+    : featuredBookScriptureByChapterId[activeChapter.id]
   const activeScripture = activeScriptureSet?.primary
-  const secondaryScripture = activeScriptureSet?.secondary
+  const showWorkspaceNotes = !isRoutedChapter || routedChapterId === activeChapter.id
+  const chapterStudyLabel = isRoutedChapter
+    ? formatStudyChapterLabel(studyRoute.bookOrd!, studyRoute.chapterOrd!)
+    : activeScripture
+      ? activeChapter.passage
+      : 'Scripture draft coming next'
 
   const chapterNotes = useMemo(
-    () =>
-      workspaceState.notes
+    () => {
+      if (!showWorkspaceNotes) return []
+
+      return workspaceState.notes
         .filter((note) => note.chapterId === activeChapter.id)
         .sort((a, b) => {
           if (a.verseOrd !== b.verseOrd) return a.verseOrd - b.verseOrd
           return b.updatedAt.localeCompare(a.updatedAt)
-        }),
-    [activeChapter.id, workspaceState.notes],
+        })
+    },
+    [activeChapter.id, showWorkspaceNotes, workspaceState.notes],
   )
 
   const notesByVerse = useMemo(() => {
@@ -170,11 +237,12 @@ export function StudyWorkspace({ user, theme, onToggleTheme }: StudyWorkspacePro
     setDraftBody('')
   }
 
-  const selectChapter = (chapter: StudyChapter) => {
+  const selectChapter = (_chapter: StudyChapter) => {
     setWorkspaceState((current) => ({
       ...current,
-      lastChapterId: chapter.id,
+      lastChapterId: STUDY_PLACEHOLDER_CHAPTER_ID,
     }))
+    openStudyChapter(STUDY_CONNECTED_BOOK_ORD, STUDY_PLACEHOLDER_CHAPTER_ORD)
     resetComposer()
     setReplyingToNoteId(null)
     setCommentDraft('')
@@ -338,7 +406,7 @@ export function StudyWorkspace({ user, theme, onToggleTheme }: StudyWorkspacePro
             </div>
             <div className="chapter-list">
               {featuredBook.chapters.map((chapter) => {
-                const selected = chapter.id === activeChapter.id
+                const selected = chapter.id === STUDY_PLACEHOLDER_CHAPTER_ID
                 const completed = workspaceState.completedChapterIds.includes(chapter.id)
 
                 return (
@@ -372,65 +440,88 @@ export function StudyWorkspace({ user, theme, onToggleTheme }: StudyWorkspacePro
         </aside>
 
         <section className="study-main">
-          <div className="study-panel chapter-focus">
-            <div className="study-panel__heading">
-              <div>
-                <p className="chapter-card__eyebrow">{activeChapter.passage}</p>
-                <h2>{activeChapter.title}</h2>
+          {isRoutedChapter ? (
+            <ChapterContextPanel
+              bookOrd={CANONICAL_STUDY_ROUTE.bookOrd}
+              chapterOrd={CANONICAL_STUDY_ROUTE.chapterOrd}
+              tagNames={tagNameMap}
+            />
+          ) : null}
+
+          {!isRoutedChapter ? (
+            <div className="study-panel chapter-focus">
+              <div className="study-panel__heading">
+                <div>
+                  <p className="chapter-card__eyebrow">{activeChapter.passage}</p>
+                  <h2>{activeChapter.title}</h2>
+                </div>
+                <button
+                  type="button"
+                  className={`chapter-toggle${workspaceState.completedChapterIds.includes(activeChapter.id) ? ' is-complete' : ''}`}
+                  onClick={() => toggleChapterComplete(activeChapter.id)}
+                >
+                  {workspaceState.completedChapterIds.includes(activeChapter.id)
+                    ? '已完成'
+                    : '标记本章已完成'}
+                </button>
               </div>
-              <button
-                type="button"
-                className={`chapter-toggle${workspaceState.completedChapterIds.includes(activeChapter.id) ? ' is-complete' : ''}`}
-                onClick={() => toggleChapterComplete(activeChapter.id)}
-              >
-                {workspaceState.completedChapterIds.includes(activeChapter.id)
-                  ? '已完成'
-                  : '标记本章已完成'}
-              </button>
-            </div>
 
-            <div className="chapter-grid">
-              <article>
-                <h3>本章重点</h3>
-                <p>{activeChapter.summary}</p>
-              </article>
-              <article>
-                <h3>关键经文</h3>
-                <blockquote>{activeChapter.keyVerse}</blockquote>
-              </article>
-            </div>
+              <div className="chapter-grid">
+                <article>
+                  <h3>本章重点</h3>
+                  <p>{activeChapter.summary}</p>
+                </article>
+                <article>
+                  <h3>关键经文</h3>
+                  <blockquote>{activeChapter.keyVerse}</blockquote>
+                </article>
+              </div>
 
-            <div>
-              <h3>建议思考</h3>
-              <ul className="prompt-list">
-                {activeChapter.prompts.map((prompt) => (
-                  <li key={prompt}>{prompt}</li>
-                ))}
-              </ul>
+              <div>
+                <h3>建议思考</h3>
+                <ul className="prompt-list">
+                  {activeChapter.prompts.map((prompt) => (
+                    <li key={prompt}>{prompt}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
+          ) : null}
         </section>
 
-        <section className="study-panel scripture-panel study-layout__full">
-          <div className="study-panel__heading">
-            <div>
-              <h2>Chapter study</h2>
-              <span>{activeScripture ? activeChapter.passage : 'Scripture draft coming next'}</span>
-            </div>
-            {draftVerseOrd != null && (
-              <button type="button" className="btn btn-link btn-sm" onClick={resetComposer}>
-                Cancel
-              </button>
-            )}
-          </div>
-
+        <section
+          ref={chapterStudyRef}
+          className="study-panel scripture-panel study-layout__full"
+        >
           {!activeScripture ? (
-            <div className="empty-state">
-              <h3>这章的经文还没接上</h3>
-              <p>先保留骨架。下一步接 chapter json 后，这里就会显示逐节经文。</p>
-            </div>
+            <>
+              <div className="study-panel__heading">
+                <div>
+                  <h2>{chapterStudyLabel}</h2>
+                </div>
+                <div className="study-panel__heading-aside">
+                  <span className="study-chapter-study-label">Chapter study</span>
+                </div>
+              </div>
+              <div className="empty-state">
+                <h3>这章的经文还没接上</h3>
+                <p>先保留骨架。下一步接 chapter json 后，这里就会显示逐节经文。</p>
+              </div>
+            </>
           ) : (
             <div className="verse-study">
+              <div className="verse-study__title-row">
+                <h2>{chapterStudyLabel}</h2>
+                <div className="verse-study__title-aside">
+                  <span className="study-chapter-study-label">Chapter study</span>
+                  {draftVerseOrd != null ? (
+                    <button type="button" className="btn btn-link btn-sm" onClick={resetComposer}>
+                      Cancel
+                    </button>
+                  ) : null}
+                </div>
+              </div>
+
               <div className="verse-study__header">
                 <span>Verse</span>
                 <span>Scripture</span>
@@ -447,11 +538,6 @@ export function StudyWorkspace({ user, theme, onToggleTheme }: StudyWorkspacePro
                       <div className="verse-row__ord">{verse.verseOrd}</div>
                       <div className="verse-row__scripture">
                         <p>{verse.text}</p>
-                        {secondaryScripture?.verses[verse.verseOrd - 1] && (
-                          <p className="scripture-secondary">
-                            {secondaryScripture.verses[verse.verseOrd - 1].text}
-                          </p>
-                        )}
                       </div>
 
                       <div className="verse-row__notes">
@@ -465,27 +551,36 @@ export function StudyWorkspace({ user, theme, onToggleTheme }: StudyWorkspacePro
                                 <article key={note.id} className="verse-note-card">
                                   <div className="verse-note-card__header">
                                     <p>{new Date(note.updatedAt).toLocaleString()}</p>
-                                    <div className="note-actions">
+                                    <div className="note-action-bar">
                                       <button
                                         type="button"
-                                        className="btn btn-outline-secondary btn-sm"
+                                        className="note-action-btn note-action-btn--full-page"
+                                        aria-label="Edit note"
+                                        title="Edit"
                                         onClick={() => startEdit(note)}
                                       >
-                                        Edit
+                                        <i className="bi bi-pencil" aria-hidden />
                                       </button>
                                       <button
                                         type="button"
-                                        className="btn btn-outline-secondary btn-sm"
+                                        className="note-action-btn note-action-btn--comment"
+                                        aria-label={isExpanded ? 'Hide comments' : 'Comments'}
+                                        title={isExpanded ? 'Hide comments' : 'Comments'}
                                         onClick={() => toggleComments(note.id)}
                                       >
-                                        {isExpanded ? 'Hide comments' : 'Comments'}
+                                        <i
+                                          className={`bi ${isExpanded ? 'bi-chat-left-fill' : 'bi-chat-left'}`}
+                                          aria-hidden
+                                        />
                                       </button>
                                       <button
                                         type="button"
-                                        className="btn btn-outline-danger btn-sm"
+                                        className="note-action-btn note-action-btn--danger"
+                                        aria-label="Delete note"
+                                        title="Delete"
                                         onClick={() => deleteNote(note.id)}
                                       >
-                                        Delete
+                                        <i className="bi bi-trash" aria-hidden />
                                       </button>
                                     </div>
                                   </div>

@@ -32,6 +32,30 @@ export type ScriptureChapter = {
   verses: ScriptureVerse[]
 }
 
+/** Mock scripture lives on this book/chapter until more content is added. */
+export const STUDY_CONNECTED_BOOK_ORD = 60
+
+/** All study chapter links resolve here until more scripture is added. */
+export const STUDY_PLACEHOLDER_CHAPTER_ORD = 1
+export const STUDY_PLACEHOLDER_CHAPTER_ID = '1pet-1'
+
+export const CANONICAL_STUDY_ROUTE = {
+  bookOrd: STUDY_CONNECTED_BOOK_ORD,
+  chapterOrd: STUDY_PLACEHOLDER_CHAPTER_ORD,
+} as const
+
+export function isStudyConnectedBook(bookOrd: number): boolean {
+  return bookOrd === STUDY_CONNECTED_BOOK_ORD
+}
+
+export function normalizeStudyBookOrd(_bookOrd: number): number {
+  return STUDY_CONNECTED_BOOK_ORD
+}
+
+export function normalizeStudyChapterOrd(_bookOrd: number, _chapterOrd: number): number {
+  return STUDY_PLACEHOLDER_CHAPTER_ORD
+}
+
 export const firstPeterChapter1DraftNkJV: ScriptureChapter = {
   versionAbbr: 'NKJV',
   bookOrd: 60,
@@ -256,8 +280,17 @@ export const featuredBookScriptureByChapterId: Record<
 > = {
   '1pet-1': {
     primary: firstPeterChapter1DraftNkJV,
-    secondary: firstPeterChapter1DraftCuv,
   },
+}
+
+export function getScriptureForBookChapter(
+  bookOrd: number,
+  chapterOrd: number,
+): { primary: ScriptureChapter; secondary?: ScriptureChapter } | null {
+  if (bookOrd === STUDY_CONNECTED_BOOK_ORD && chapterOrd === STUDY_PLACEHOLDER_CHAPTER_ORD) {
+    return featuredBookScriptureByChapterId[STUDY_PLACEHOLDER_CHAPTER_ID] ?? null
+  }
+  return null
 }
 
 export const featuredBook: StudyBook = {

@@ -1,169 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Stone of Hope</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <!-- Navigation-->
-        <nav class="navbar navbar-light bg-light static-top">
-            <div class="container">
-                <a class="navbar-brand" href="#!">Stone Of Hope</a>
-                <a class="btn btn-primary" href="#download">Download</a>
-            </div>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Stone of Hope — iOS 圣经笔记：讲道速记、拍照识经文、V5 快捷挂经节。"
+    />
+    <title>Stone of Hope</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="css/home.css" rel="stylesheet" />
+    <style>
+      body {
+        font-family: 'Source Sans 3', var(--soh-sans);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="soh-nav">
+      <div class="soh-shell soh-nav__inner">
+        <a class="soh-brand" href="index.html">Stone of Hope</a>
+        <nav class="soh-nav__links" aria-label="Primary">
+          <a class="soh-nav__link soh-nav__link--hide-sm" href="about.html">About</a>
+          <a class="soh-nav__link" href="privacy.html">Privacy</a>
+          <a class="soh-btn soh-btn--primary" href="#download">下载 App</a>
         </nav>
-        <!-- Masthead-->
-        <header class="masthead">
-            <div class="container position-relative">
-                <div class="row justify-content-center">
-                    <div class="col-xl-6">
-                        <div class="text-center text-white">
-                            <!-- Page heading-->
-                            <h1 class="mb-5">Thus far the LORD has helped us.</h1>
-                            <h2 class="trailing mb-6">-- 1 Samuel 7:12, NKJV</h2>
-                        </div>
-                    </div>
-                </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="soh-hero">
+        <div class="soh-shell soh-hero__grid">
+          <div class="soh-hero__copy">
+            <p class="soh-eyebrow">iOS App</p>
+            <h1>耶和华帮助了我们。</h1>
+            <p class="soh-hero__ref">撒上 7:12</p>
+            <p class="soh-hero__lead">
+              在 iPhone 上，把讲道、祷告和经文记下来——趁印象还在。
+            </p>
+            <a class="soh-btn soh-btn--primary" href="#download">下载 iOS 版</a>
+          </div>
+          <figure class="soh-hero__shot">
+            <img src="assets/img/sermonnotes.png" alt="Stone of Hope 讲道笔记界面" />
+          </figure>
+        </div>
+      </section>
+
+      <section class="soh-showcase">
+        <div class="soh-shell">
+          <article class="soh-showcase__row">
+            <figure class="soh-showcase__media">
+              <img src="assets/img/sermonnotes.png" alt="讲道笔记示例" />
+            </figure>
+            <div class="soh-showcase__text">
+              <h2>讲道笔记</h2>
+              <p>堂上讲，台下记。笔记和经节、讲章连在一起，过后还能找回来。</p>
             </div>
-        </header>
-        <!-- Icons Grid-->
-        <section class="features-icons bg-light text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex"><i class="bi-window m-auto text-primary"></i></div>
-                            <h3>Take Quick Notes</h3>
-                            <p class="lead mb-0">Moved by Scripture or prayer? Save your thoughts in moments.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex"><i class="bi-layers m-auto text-primary"></i></div>
-                            <h3>Connect Sermons</h3>
-                            <p class="lead mb-0">Need clarity on a chapter? Access related sermons with ease.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-                            <div class="features-icons-icon d-flex"><i class="bi-terminal m-auto text-primary"></i></div>
-                            <h3>Easy to Use</h3>
-                            <p class="lead mb-0">Begin today, grow daily. Witness His work in your spiritual journey!</p>
-                        </div>
-                    </div>
-                </div>
+          </article>
+
+          <article class="soh-showcase__row soh-showcase__row--flip">
+            <figure class="soh-showcase__media">
+              <img src="assets/img/addverse.png" alt="拍照识经文示例" />
+            </figure>
+            <div class="soh-showcase__text">
+              <h2>拍照识经文</h2>
+              <p>拍下投影或讲义上的经文，识别后填入笔记，少打字。</p>
             </div>
-        </section>
-        <!-- Image Showcases-->
-        <section class="showcase">
-            <div class="container-fluid p-0">
-                <div class="row g-0">
-                    <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('assets/img/connectsermons.png')"></div>
-                    <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                        <h2>Study with Sermons</h2>
-                        <p class="lead mb-0">Our integrated sermon library from <b><a href="https://riversidecalvary.com/" target="_blank">Riverside Calvary Chapel</a></b> offers expository preaching on every chapter of the Bible. With over 1,500 messages available a click away, you'll always find relevant pastoral teaching to complement your personal Bible study.</p>
-                    </div>
-                </div>
-                <div class="row g-0">
-                    <div class="col-lg-6 text-white showcase-img" style="background-image: url('assets/img/addverse.png')"></div>
-                    <div class="col-lg-6 my-auto showcase-text">
-                        <h2>Smart Scripture Input</h2>
-                        <p class="lead mb-0">Type it, pick it, or snap it - our intelligent system recognizes Bible references in multiple formats and even from photos, making verse entry effortless however you prefer to study.</p>
-                    </div>
-                </div>
-                <div class="row g-0">
-                    <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('assets/img/sermonnotes.png')"></div>
-                    <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                        <h2>Context-aware for Sermon Notes</h2>
-                        <p class="lead mb-0">During Chapter-Based Sermons, use shortcuts like "V5 powerful truth" and it instantly links your comment to that verse. Only works when the sermon has a defined Bible chapter reference.</p>
-                        <p class="lead mb-0"><b>"V" is the key</b> - works for single verses or ranges like <b>v1, v4-5</b> etc.</p>
-                    </div>
-                </div>
-                <div class="row g-0">
-                    <div class="col-lg-6 text-white showcase-img" style="background-image: url('assets/img/mark-reading.png')"></div>
-                    <div class="col-lg-6 my-auto showcase-text">
-                        <h2>Mark your readings</h2>
-                        <p class="lead mb-0">Visualize your reading progress at a glance. Previously read chapters appear in green, today's reading in blue. Press and hold any chapter to explore connected sermons and notes.</p>
-                    </div>
-                </div>
+          </article>
+
+          <article class="soh-showcase__row">
+            <figure class="soh-showcase__media">
+              <img src="assets/img/mark-reading.png" alt="阅读进度与经文快捷示例" />
+            </figure>
+            <div class="soh-showcase__text">
+              <h2>输入 <kbd>V5</kbd> 挂上经节</h2>
+              <p>章讲进行中，打「V5」加上你的想法，就链到那一节。</p>
             </div>
-        </section>
-        <!-- Testimonials-->
-        <section class="testimonials text-center bg-light">
-            <div class="container">
-                <h2 class="mb-5">What's next...</h2>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                            <img class="img-fluid rounded-circle mb-3" src="assets/img/next-android.jpg" alt="..." />
-                            <h5>Android version</h5>
-                            <p class="font-weight-light mb-0">Andriod version coming soon.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                            <img class="img-fluid rounded-circle mb-3" src="assets/img/next-language.jpg" alt="..." />
-                            <h5>Multi Language Support</h5>
-                            <p class="font-weight-light mb-0">Expanding language accessibility beyond our current English and Chinese support.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                            <img class="img-fluid rounded-circle mb-3" src="assets/img/next-versions.jpg" alt="..." />
-                            <h5>More Bible Versions</h5>
-                            <p class="font-weight-light mb-0">Expanding Scripture beyond our current KJV and CUV of public domain versions.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Call to Action-->
-        <section class="call-to-action text-white text-center" id="signup">
-            <div class="container position-relative">
-                <div class="row justify-content-center">
-                    <div class="col-xl-6">
-                        <h2 class="mb-4">May this app enrich your walk in faith.</h2>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Footer-->
-        <footer class="footer bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
-                        <ul class="list-inline mb-2">
-                            <li class="list-inline-item"><a href="about.html">About</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Contact</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Terms of Use</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="privacy.html">Privacy Policy</a></li>
-                        </ul>
-                        <p class="text-muted small mb-4 mb-lg-0">&copy; StoneOfHope 2025. All Rights Reserved.</p>
-                    </div>
-                    <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
-                        
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-    </body>
+          </article>
+        </div>
+      </section>
+
+      <section class="soh-aside">
+        <div class="soh-shell">
+          <p class="soh-aside__label">Web</p>
+          <p class="soh-aside__body">
+            网页版章节研读还在准备中。登录账号后，笔记可在设备间同步。
+          </p>
+        </div>
+      </section>
+
+      <section class="soh-shell" id="download">
+        <div class="soh-cta">
+          <p class="soh-cta__verse">Thus far the LORD has helped us. — 1 Samuel 7:12</p>
+          <a class="soh-btn soh-btn--primary" href="#download">下载 iOS 版</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="soh-footer">
+      <div class="soh-shell">
+        <ul class="soh-footer__links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="mailto:support@stoneofhope.app">support@stoneofhope.app</a></li>
+        </ul>
+        <p class="soh-footer__copy">&copy; Stone of Hope 2026</p>
+      </div>
+    </footer>
+  </body>
 </html>
