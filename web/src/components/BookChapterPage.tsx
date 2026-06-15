@@ -5,6 +5,7 @@ import { browseTags, getItemsForChapter } from '../browseData'
 import { navigateToHome } from '../appNavigation'
 import { readChapterRouteFromHash } from '../chapterNavigation'
 import { getSermonsForChapter } from '../sermonMockData'
+import { useUserOnlineResources } from '../context/UserOnlineResourcesContext'
 import type { ScriptureChapter } from '../studyData'
 import { ChapterContextPanel } from './ChapterContextPanel'
 import { ChapterVerseStudy } from './ChapterVerseStudy'
@@ -12,6 +13,7 @@ import { ChapterVerseStudy } from './ChapterVerseStudy'
 const tagNameMap = Object.fromEntries(browseTags.map((tag) => [tag.id, tag.name]))
 
 export function BookChapterPage() {
+  const { importedKeys } = useUserOnlineResources()
   const [route, setRoute] = useState(() => readChapterRouteFromHash())
   const [scripture, setScripture] = useState<ScriptureChapter | null>(null)
   const [loadingScripture, setLoadingScripture] = useState(true)
@@ -56,7 +58,7 @@ export function BookChapterPage() {
   }
 
   const book = getBibleBook(route.bookOrd)
-  const sermons = getSermonsForChapter(route.bookOrd, route.chapterOrd)
+  const sermons = getSermonsForChapter(route.bookOrd, route.chapterOrd, importedKeys)
   const notes = getItemsForChapter(route.bookOrd, route.chapterOrd)
   const chapterTitle = book ? `${book.name} ${route.chapterOrd}` : `Chapter ${route.chapterOrd}`
 

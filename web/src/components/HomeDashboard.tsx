@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { SessionUser } from '../session'
+import { mockSermonsToRecentSermons } from '../mockDataAdapter'
+import { useUserOnlineResources } from '../context/UserOnlineResourcesContext'
 import { WeekStrip } from './WeekStrip'
 import { formatMonthLabel, getLast7Days } from '../calendarData'
 import {
@@ -7,7 +9,6 @@ import {
   greetingForHour,
   pickHomeFlowerImage,
   pickStarredReviewItems,
-  recentSermons,
   recentStudyBooks,
   pickStudyAccentImage,
   resolveStudyHighlight,
@@ -137,6 +138,11 @@ function ReviewSlide({ item }: { item: ReviewItem }) {
 }
 
 export function HomeDashboard({ user }: HomeDashboardProps) {
+  const { importedKeys } = useUserOnlineResources()
+  const recentSermons = useMemo(
+    () => mockSermonsToRecentSermons(importedKeys).slice(0, 3),
+    [importedKeys],
+  )
   const displayName = user.displayName || user.email?.split('@')[0] || 'friend'
   const greeting = greetingForHour(new Date().getHours())
   const [greetingFirst, ...greetingTail] = greeting.split(' ')

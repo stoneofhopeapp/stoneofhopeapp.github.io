@@ -3,6 +3,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { getFirebaseAuth } from './firebase'
 import {
   navigateToHome,
+  navigateToOnlineResources,
   navigateToStudyHome,
   navigateToTags,
   readAppScreenFromHash,
@@ -22,6 +23,8 @@ import { CalendarPage } from './components/CalendarPage'
 import { TagsPage } from './components/TagsPage'
 import { SermonDetailsPage } from './components/SermonDetailsPage'
 import { SeriesDetailsPage } from './components/SeriesDetailsPage'
+import { OnlineResourcesPage } from './components/OnlineResourcesPage'
+import { UserOnlineResourcesProvider } from './context/UserOnlineResourcesContext'
 
 type Screen = 'landing' | 'auth'
 type ThemeMode = 'light' | 'dark'
@@ -105,6 +108,10 @@ function App() {
     navigateToTags()
   }
 
+  const openOnlineResources = () => {
+    navigateToOnlineResources()
+  }
+
   const handleSignOut = async () => {
     if (firebaseUser) {
       const auth = getFirebaseAuth()
@@ -120,18 +127,22 @@ function App() {
   return (
     <>
       {currentUser ? (
-        <>
-          <SiteHeader
-            user={currentUser}
-            appScreen={appScreen}
-            onHomeClick={openHome}
-            onStudyClick={openStudy}
-            onCalendarClick={openCalendar}
-            onTagsClick={openTags}
-            onLoginClick={() => openAuth('login')}
-            onSignOut={handleSignOut}
-          />
-          {appScreen === 'study' ? (
+        <UserOnlineResourcesProvider user={currentUser}>
+          <>
+            <SiteHeader
+              user={currentUser}
+              appScreen={appScreen}
+              onOnlineResourcesClick={openOnlineResources}
+              onHomeClick={openHome}
+              onStudyClick={openStudy}
+              onCalendarClick={openCalendar}
+              onTagsClick={openTags}
+              onLoginClick={() => openAuth('login')}
+              onSignOut={handleSignOut}
+            />
+          {appScreen === 'online-resources' ? (
+            <OnlineResourcesPage />
+          ) : appScreen === 'study' ? (
             <div id="study-workspace">
               <StudyWorkspace
                 key={currentUser.uid}
@@ -155,7 +166,8 @@ function App() {
           ) : (
             <HomeDashboard user={currentUser} />
           )}
-        </>
+          </>
+        </UserOnlineResourcesProvider>
       ) : screen === 'auth' ? (
         <AuthPage
           mode={authMode}

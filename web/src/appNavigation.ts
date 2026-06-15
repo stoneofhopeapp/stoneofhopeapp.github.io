@@ -1,6 +1,15 @@
 import { CANONICAL_STUDY_ROUTE } from './studyData'
 
-export type AppScreen = 'home' | 'study' | 'calendar' | 'tags' | 'chapter' | 'verse' | 'sermon' | 'series'
+export type AppScreen =
+  | 'home'
+  | 'study'
+  | 'calendar'
+  | 'tags'
+  | 'chapter'
+  | 'verse'
+  | 'sermon'
+  | 'series'
+  | 'online-resources'
 
 let syncAppScreen: ((screen: AppScreen) => void) | null = null
 
@@ -13,6 +22,7 @@ export function readAppScreenFromHash(): AppScreen {
   if (/^#chapter\/\d+\/\d+\/verse\/\d+$/.test(hash)) return 'verse'
   if (hash.startsWith('#sermon/')) return 'sermon'
   if (hash.startsWith('#series/')) return 'series'
+  if (hash === '#online-resources') return 'online-resources'
   if (hash.startsWith('#chapter/')) return 'chapter'
   if (hash === '#study' || hash === '#study-workspace' || hash.startsWith('#study/')) {
     return 'study'
@@ -55,6 +65,10 @@ export function navigateToHome() {
 
 export function navigateToTags() {
   setAppHash('tags', 'tags')
+}
+
+export function navigateToOnlineResources() {
+  setAppHash('online-resources', 'online-resources')
 }
 
 export function readSermonIdFromHash(): string | null {

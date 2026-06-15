@@ -1,4 +1,5 @@
 import riversideSermonsJson from './data/riverside-sermons.mock.json'
+import { mockRiversideSeries, type MockSeries } from './mockData'
 import type { CalendarActivity } from './calendarData'
 import { formatPreachedOnDate } from './dateFormat'
 
@@ -70,6 +71,15 @@ const connectedTeachingSermons: RiversideSermonMock[] = [
 
 export const allSermonMocks = [...riversideSermonMocks, ...connectedTeachingSermons]
 
+export function filterSermonsByChurchKeys(
+  sermons: RiversideSermonMock[],
+  churchKeys: string[],
+): RiversideSermonMock[] {
+  if (churchKeys.length === 0) return []
+  const allowed = new Set(churchKeys)
+  return sermons.filter((sermon) => allowed.has(sermon.churchKey))
+}
+
 /** Calendar-day keys (`yyyy-MM-dd`) that have at least one sermon activity. */
 export function sermonCalendarDateKeys(): string[] {
   const dates = new Set(allSermonMocks.map((sermon) => preachedOnToDateKey(sermon.preachedOn)))
@@ -123,11 +133,22 @@ export function sermonVerseRange(sermon: RiversideSermonMock): string | undefine
   return sermon.chapterRange.split(':').slice(1).join(':').trim()
 }
 
-export function getSermonsForChapter(bookOrd: number, chapterOrd: number): RiversideSermonMock[] {
+export function getSermonsForChapter(
+  bookOrd: number,
+  chapterOrd: number,
+  importedChurchKeys?: string[],
+): RiversideSermonMock[] {
   const seen = new Set<string>()
 
-  return allSermonMocks
-    .filter((sermon) => sermon.bookOrd === bookOrd && sermon.chapters.includes(chapterOrd))
+  let sermons = allSermonMocks.filter(
+    (sermon) => sermon.bookOrd === bookOrd && sermon.chapters.includes(chapterOrd),
+  )
+
+  if (importedChurchKeys) {
+    sermons = filterSermonsByChurchKeys(sermons, importedChurchKeys)
+  }
+
+  return sermons
     .filter((sermon) => {
       if (seen.has(sermon.id)) return false
       seen.add(sermon.id)
@@ -136,6 +157,20 @@ export function getSermonsForChapter(bookOrd: number, chapterOrd: number): River
     .sort((a, b) => b.preachedOn.localeCompare(a.preachedOn))
 }
 
-export function countSermonsForChapter(bookOrd: number, chapterOrd: number): number {
-  return getSermonsForChapter(bookOrd, chapterOrd).length
+export function getSeriesForChapter(
+  bookOrd: number,
+  chapterOrd: number,
+  importedChurchKeys: string[],
+): MockSeries[] {
+  const sermons = getSermonsForChapter(bookOrd, chapterOrd, importedChurchKeys)
+  const seriesIds = new Set(sermons.map((sermon) => sermon.seriesId))
+  return mockRiversideSeries.filter((series) => seriesIds.has(series.id))
+}
+
+export function countSermonsForChapter(
+  bookOrd: number,
+  chapterOrd: number,
+  importedChurchKeys?: string[],
+): number {
+  return getSermonsForChapter(bookOrd, chapterOrd, importedChurchKeys).length
 }

@@ -3085,3 +3085,107 @@ body {
   display: grid;
   gap: 0.85rem;
 }
+
+/* Online resources */
+
+.online-resources-header__title {
+  margin: 0 0 0.35rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+}
+
+.online-resources-panel {
+  padding-top: 0.25rem;
+}
+
+.online-resources-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.online-resource-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--soh-card-border);
+  border-radius: 1rem;
+  background: var(--soh-card-bg);
+  box-shadow: var(--soh-card-shadow);
+}
+
+.online-resource-card__head h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.online-resource-card__subtitle {
+  margin: 0.2rem 0 0;
+  color: var(--soh-muted);
+  font-size: var(--soh-font-sm);
+  font-weight: 600;
+}
+
+.online-resource-card__intro {
+  margin: 0.65rem 0 0;
+  color: var(--soh-text);
+  font-size: var(--soh-font-card-body);
+  line-height: 1.65;
+}
+
+.online-resource-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.65rem;
+}
+
+.online-resource-card__links a {
+  color: var(--soh-accent, #4a7eb8);
+  font-size: var(--soh-font-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.online-resource-card__links a:hover {
+  text-decoration: underline;
+}
+
+.online-resource-card__action {
+  flex: 0 0 auto;
+  padding-top: 0.15rem;
+}
+
+.online-resource-card__added {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.38rem 0.75rem;
+  border-radius: 999px;
+  background: var(--soh-soft-surface);
+  color: var(--soh-muted);
+  font-size: var(--soh-font-sm);
+  font-weight: 700;
+}
+
+.chapter-context-panel__series-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.chapter-context-panel__series-link {
+  display: inline-flex;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--soh-card-border);
+  border-radius: 999px;
+  background: var(--soh-soft-surface);
+  color: var(--soh-accent, #4a7eb8);
+  font-size: var(--soh-font-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.chapter-context-panel__series-link:hover {
+  text-decoration: underline;
+}

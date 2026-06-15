@@ -4,6 +4,7 @@ import {
   countChapterContent,
   openTagsRoute,
 } from '../browseData'
+import { useUserOnlineResources } from '../context/UserOnlineResourcesContext'
 import { chapterNumbersForBook } from '../bibleBooks'
 import { openStudyChapter } from '../studyNavigation'
 
@@ -12,6 +13,7 @@ type BibleBooksPanelProps = {
 }
 
 function ChapterGridInline({ bookOrd }: { bookOrd: number }) {
+  const { importedKeys } = useUserOnlineResources()
   const chapters = chapterNumbersForBook(bookOrd)
 
   return (
@@ -19,7 +21,7 @@ function ChapterGridInline({ bookOrd }: { bookOrd: number }) {
       <p className="library-panel__hint">Pick a chapter to open its book chapter page.</p>
       <div className="library-bible-chapter-grid">
         {chapters.map((chapter) => {
-          const { sermons, notes } = countChapterContent(bookOrd, chapter)
+          const { sermons, notes } = countChapterContent(bookOrd, chapter, importedKeys)
           const hasContent = sermons + notes > 0
 
           return (
@@ -53,6 +55,7 @@ function scrollBookIntoView(node: HTMLDivElement | null) {
 }
 
 function BookAccordionList({ expandedBookOrd }: { expandedBookOrd?: number }) {
+  const { importedKeys } = useUserOnlineResources()
   const activeBookRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -82,7 +85,9 @@ function BookAccordionList({ expandedBookOrd }: { expandedBookOrd?: number }) {
   return (
     <div className="library-bible__books">
       <p className="library-panel__hint">
-        All 66 books — tap a chapter to see sermons and Bible study.
+        {importedKeys.length === 0
+          ? 'Add a church from Resources to see sermons and series on each chapter.'
+          : 'All 66 books — tap a chapter to see sermons and Bible study.'}
       </p>
       <div className="library-bible-book-list" role="list">
         {bibleBookOptions.map((book) => {

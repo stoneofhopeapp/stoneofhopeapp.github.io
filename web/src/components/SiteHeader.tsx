@@ -2,7 +2,8 @@ import type { SessionUser } from '../session'
 
 type SiteHeaderProps = {
   user: SessionUser | null
-  appScreen?: 'home' | 'study' | 'calendar' | 'tags' | 'chapter' | 'verse' | 'sermon'
+  appScreen?: 'home' | 'study' | 'calendar' | 'tags' | 'chapter' | 'verse' | 'sermon' | 'series' | 'online-resources'
+  onOnlineResourcesClick?: () => void
   onHomeClick?: () => void
   onStudyClick?: () => void
   onCalendarClick?: () => void
@@ -15,6 +16,7 @@ export function SiteHeader({
   user,
   appScreen = 'home',
   onHomeClick,
+  onOnlineResourcesClick,
   onStudyClick,
   onCalendarClick,
   onTagsClick,
@@ -28,6 +30,13 @@ export function SiteHeader({
     <div className="soh-nav__actions d-flex align-items-center gap-2">
       {user ? (
         <>
+          <button
+            type="button"
+            className={`btn btn-sm ${appScreen === 'online-resources' ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={onOnlineResourcesClick}
+          >
+            Resources
+          </button>
           <button
             type="button"
             className={`btn btn-sm ${appScreen === 'home' ? 'btn-primary' : 'btn-outline-primary'}`}

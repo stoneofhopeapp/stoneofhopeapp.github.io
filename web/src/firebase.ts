@@ -1,5 +1,6 @@
 import { initializeApp, type FirebaseApp } from 'firebase/app'
 import { getAuth, type Auth } from 'firebase/auth'
+import { getFirestore, type Firestore } from 'firebase/firestore'
 
 function readConfig() {
   const env = import.meta.env
@@ -41,4 +42,9 @@ export function getFirebaseApp(): FirebaseApp | null {
 export function getFirebaseAuth(): Auth | null {
   const a = getFirebaseApp()
   return a ? getAuth(a) : null
+}
+
+export function getFirestoreDb(): Firestore | null {
+  const a = getFirebaseApp()
+  return a ? getFirestore(a) : null
 }

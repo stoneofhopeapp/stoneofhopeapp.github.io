@@ -305,12 +305,16 @@ export function countNotesForChapter(bookOrd: number, chapterOrd: number): numbe
   return getItemsForChapter(bookOrd, chapterOrd).length
 }
 
-export function countChapterContent(bookOrd: number, chapterOrd: number): {
+export function countChapterContent(
+  bookOrd: number,
+  chapterOrd: number,
+  importedChurchKeys?: string[],
+): {
   sermons: number
   notes: number
 } {
   return {
-    sermons: countSermonsForChapter(bookOrd, chapterOrd),
+    sermons: countSermonsForChapter(bookOrd, chapterOrd, importedChurchKeys),
     notes: countNotesForChapter(bookOrd, chapterOrd),
   }
 }

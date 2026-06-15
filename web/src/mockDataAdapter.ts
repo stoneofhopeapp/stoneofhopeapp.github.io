@@ -9,7 +9,7 @@ import {
   type MockNote,
   type MockNoteType,
 } from './mockData'
-import { preachedOnToDateLabel } from './sermonMockData'
+import { filterSermonsByChurchKeys, preachedOnToDateLabel } from './sermonMockData'
 
 function isoToDateKey(iso: string): string {
   return iso.slice(0, 10)
@@ -178,8 +178,12 @@ export function mockStarredToReviewItems(): ReviewItem[] {
     })
 }
 
-export function mockSermonsToRecentSermons(): RecentSermon[] {
-  return [...mockRiversideSermons]
+export function mockSermonsToRecentSermons(importedChurchKeys?: string[]): RecentSermon[] {
+  const sermons = importedChurchKeys
+    ? filterSermonsByChurchKeys([...mockRiversideSermons], importedChurchKeys)
+    : [...mockRiversideSermons]
+
+  return sermons
     .sort((a, b) => b.preachedOn.localeCompare(a.preachedOn))
     .map((sermon) => ({
       id: sermon.id,
