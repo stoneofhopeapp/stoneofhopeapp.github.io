@@ -1,0 +1,13 @@
+# Local web app build (mvp/web branch — not deployed from main docs/)
+web/
+
+# Dependencies & build output (anywhere in repo)
+node_modules/
+dist/
+
+# macOS
+.DS_Store
+
+# Env / secrets
+.env
+.env.*
